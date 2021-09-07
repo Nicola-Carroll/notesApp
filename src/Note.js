@@ -3,16 +3,29 @@ class Note {
     this.content = content;
   }
 
-  emojiStrings() {
-    const words = this.content.split(/[^:\w]/);
-    return words.filter((word) => this._isEmoji(word));
+  async emojify(string) {
+    // connect to the api
+
+    const response = await fetch("https://makers-emojify.herokuapp.com/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: `${string}` }),
+    });
+    const data = await response.json();
+    console.log(data.emojified_text);
+    return data.emojified_text;
   }
 
-  create() {
-    // returns the content of note but with emojis unicodes
-  }
-
-  _isEmoji(string) {
-    return /^:.*:$/.test(string);
+  async createWithEmojis() {
+    const promises = [];
+    this.content.replace(/:[\w]+:/g, (match) => {
+      const promise = this.emojify(match);
+      promises.push(promise);
+    });
+    const data = await Promise.all(promises);
+    const emojifiedContent = await this.content.replace(/:[\w]+:/g, () =>
+      data.shift()
+    );
+    this.content = emojifiedContent;
   }
 }
