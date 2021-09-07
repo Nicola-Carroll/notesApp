@@ -6,17 +6,16 @@ class Notebook {
   }
 
   truncatedNotes(){
-      for (const noteIndex of this.listOfNotes) {
-          if(noteIndex.length > 20) { 
-              return noteIndex.substring(0, 20)+'...'
+    for (const noteIndex of this.listOfNotes) {
+      if(noteIndex.length > 20) { 
+        return noteIndex.substring(0, 20)+'...'
       }else if(noteIndex.length <= 20) {
-          return noteIndex
+        return noteIndex
       }
-      
     }
   }
 //note.content
-openNotes(x){
+openNotes(){
   //console.log('this prints out')
  }
 
