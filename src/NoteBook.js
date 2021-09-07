@@ -15,9 +15,8 @@ class Notebook {
     }
   }
 //note.content
-openNotes(Index){
-  //console.log('this prints out')
-  return this.listOfNotes[Index];
+openNotes(note){
+  return this.listOfNotes[note];
  }
 
 }
