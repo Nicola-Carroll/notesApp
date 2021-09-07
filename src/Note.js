@@ -2,15 +2,17 @@ class Note {
   constructor(content) {
     this.content = content;
   }
-  emojify() {
-    let word = this.content.split(" ");
-    for (let i = 0; i < word.length - 1; i++) {
-      if (word[i] == /^:.*:$/g) {
-        console.log(word[i]);
-      }
-    }
+
+  emojiStrings() {
+    const words = this.content.split(/[^:\w]/);
+    return words.filter((word) => this._isEmoji(word));
   }
-  anything(string) {
-    return string == /[:\w+:]/g;
+
+  create() {
+    // returns the content of note but with emojis unicodes
+  }
+
+  _isEmoji(string) {
+    return /^:.*:$/.test(string);
   }
 }
