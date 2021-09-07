@@ -1,5 +1,5 @@
 const note = new Note("Note goes here :smile:, :heart:!");
 
-const emojiArray = [":smile:", ":heart:"];
-
-expect(note.emojiStrings()).toEqualArray(emojiArray);
+note.createWithEmojis();
+console.log(note.content);
+expect(note.content).toEqual("Note goes here :smile:, :heart:!");

@@ -12,7 +12,6 @@ class Note {
       body: JSON.stringify({ text: `${string}` }),
     });
     const data = await response.json();
-    console.log(data.emojified_text);
     return data.emojified_text;
   }
 
