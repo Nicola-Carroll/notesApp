@@ -13,26 +13,18 @@ constructor() {
 // }
 
 truncatedNotes(){
-  if(this.listOfNotes.length > 20) {
+  // dont need the if statement. - dont need the if else statement
+  if(this.listOfNotes.length > 20) { // rewrite using the map function and reiterate through each note in the array
     return this.listOfNotes.substring(0, 20)+'...'
-  } else if (this.listOfNotes.length = 20 ){
+  } else if (this.listOfNotes.length === 20 ){ //<=
     return this.listOfNotes.substring(0, 20)+'...'
   } else {
     return listOfNotes;
   }
 }
+//note.content
  openNotes(){
   console.log('this prints out')
  }
 
-}
-
-truncatedNotes(){
-  if(this.listOfNotes.length > 20) {
-    return this.listOfNotes.substring(0, 20)+'...'
-  } else if (this.listOfNotes = 20 ){
-    return this.listOfNotes.substring(0, 20)+'...'
-  } else {
-    return listOfNotes;
-  }
 }
