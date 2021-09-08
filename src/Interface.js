@@ -15,23 +15,23 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log(notebook.listOfNotes);
   console.log(notebook.truncatedNotes());
 
-  truncatedNotes = notebook.truncatedNotes();
+  const truncatedNotes = notebook.truncatedNotes();
 
   const createNoteLinkElement = (note) => {
-    noteHyperlink = document.createElement("a");
-    noteIndex = notebook.listOfNotes.indexOf(note);
-    noteHyperlink.setAttribute("id", `linkToNote${noteIndex}`);
-    noteHyperlink.setAttribute(
-      "href",
-      "https://www.webfx.com/tools/emoji-cheat-sheet/"
-    );
-    noteHyperlink.innerText = truncatedNotes[noteIndex];
-    return noteHyperlink;
+    const noteButton = document.createElement("input");
+    const noteIndex = notebook.listOfNotes.indexOf(note);
+    noteButton.setAttribute("id", `linkToNote${noteIndex}`);
+    
+    noteButton.setAttribute("value", truncatedNotes[noteIndex]);
+    noteButton.setAttribute("type", "button");
+    return noteButton;
   };
+
+
 
   const updateNoteLinks = () => {
     notebook.listOfNotes.forEach((note) => {
-      noteLink = createNoteLinkElement(note);
+      const noteLink = createNoteLinkElement(note);
       document
         .querySelector("#listOfNotes")
         .appendChild(noteLink)
@@ -40,4 +40,26 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   updateNoteLinks();
+
+  document.querySelector("#linkToNote1").addEventListener("click", () => {
+    // happen for all of the links (nice code)
+    //edit button to edit 2nd  index
+
+    // const expandedNote1 = document.createElement("p")
+    // expandedNote1.innerText = shoppingList.content
+    document.querySelector("#notepad").value = shoppingList.content
+    const editButton = document.createElement("input")
+    editButton.setAttribute("id", "edit")
+    editButton.setAttribute("type", "button")
+    editButton.setAttribute("value", "save")
+    document
+      .querySelector("#mainButtons")
+      .appendChild(editButton)
+      .appendChild(document.createElement("br"));
+
+    document.querySelector('#buttonTest').disabled = true //This disables the create button
+      
+    
+  })
+
 });
