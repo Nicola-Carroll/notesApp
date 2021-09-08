@@ -1,0 +1,14 @@
+body {
+  background-color: rgb(184, 203, 238);
+}
+
+h1 {
+  font-family: monospace;
+  font-weight: inherit;
+  font-size: 3rem;
+}
+
+.textbox {
+  width: 15rem;
+  height: 10rem;
+}
