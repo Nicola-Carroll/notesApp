@@ -3,7 +3,8 @@ const button = document.getElementById("button");
 button.addEventListener("click", function () {
   text = document.getElementById("textinput").value;
   note = new Note(text);
+  notebook = new Notebook();
   note.createWithEmojis().content;
-  console.log(addNote(note));
+  notebook.addNote(note);
+  console.log(notebook.addNote(note));
 });
-//
