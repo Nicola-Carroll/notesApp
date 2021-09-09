@@ -60,6 +60,42 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#edit").disabled = true;
     document.querySelector("#delete").disabled = true;
   };
+  createNoteLinks();
+
+  const updateNoteLinks = () => {
+    notebook.listOfNotes.forEach((note) => {
+      const noteIndex = notebook.listOfNotes.indexOf(note);
+      // we want to replace the existing element for that note with a new one
+      const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
+      const newNoteLink = createNoteLinkElement(note);
+
+      oldNoteLink.replaceWith(newNoteLink);
+    });
+  };
+
+  const createEditButton = () => {
+    const editButton = document.createElement("input");
+    editButton.setAttribute("id", "edit");
+    editButton.setAttribute("type", "button");
+    editButton.setAttribute("class", "button");
+    editButton.setAttribute("value", "Save note");
+    document
+      .querySelector("#mainButtons")
+      .appendChild(editButton)
+      .appendChild(document.createElement("br"));
+  };
+
+  const saveNote = (i) => {
+    document.querySelector("#edit").addEventListener("click", () => {
+      notebook.listOfNotes[i].content =
+        document.querySelector("#notepad").value;
+      notebook.listOfNotes[i].createWithEmojis();
+      console.log(notebook.truncatedNotes());
+      updateNoteLinks();
+    });
+  };
+
+  // <!-- <input id='delete' value="Delete note" type="button"  class="button"/> -->
 
   addEditOrDeleteNoteEventAll();
 
