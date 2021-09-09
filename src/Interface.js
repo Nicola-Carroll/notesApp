@@ -37,13 +37,26 @@ document.addEventListener("DOMContentLoaded", () => {
     return noteButton;
   };
 
-  const updateNoteLinks = () => {
+  const createNoteLinks = () => {
     notebook.listOfNotes.forEach((note) => {
       const noteLink = createNoteLinkElement(note);
       document.querySelector("#listOfNotes").appendChild(noteLink);
       document
         .querySelector("#listOfNotes")
         .appendChild(document.createElement("br"));
+    });
+  };
+
+  createNoteLinks();
+
+  const updateNoteLinks = () => {
+    notebook.listOfNotes.forEach((note) => {
+      const noteIndex = notebook.listOfNotes.indexOf(note);
+      // we want to replace the existing element for that note with a new one
+      const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
+      const newNoteLink = createNoteLinkElement(note);
+
+      oldNoteLink.replaceWith(newNoteLink);
     });
   };
 
@@ -60,14 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const saveNote = (i) => {
-    document.querySelector('#edit').addEventListener('click', () => {
-      notebook.listOfNotes[i].content = document.querySelector('#notepad').value;
+    document.querySelector("#edit").addEventListener("click", () => {
+      notebook.listOfNotes[i].content =
+        document.querySelector("#notepad").value;
       notebook.listOfNotes[i].createWithEmojis();
-    })
-  
-  }
+      console.log(notebook.truncatedNotes());
+      updateNoteLinks();
+    });
+  };
 
-  updateNoteLinks();
+  // <!-- <input id='delete' value="Delete note" type="button"  class="button"/> -->
 
   const addEditNoteEvent = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
@@ -82,17 +97,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       document.querySelector("#buttonTest").disabled = true; //This disables the create button
-      
-      saveNote(i)
+
+      saveNote(i);
     });
   };
 
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
     addEditNoteEvent(i);
   }
-// addEventListener followed by click and function is telling the Dom I want whatever is in the function to happen when I click the save button
-//querySelector is identifying that the thing of interest is the edit button (shown by its Id)
-
+  // addEventListener followed by click and function is telling the Dom I want whatever is in the function to happen when I click the save button
+  //querySelector is identifying that the thing of interest is the edit button (shown by its Id)
 });
-
-
