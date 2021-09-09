@@ -1,20 +1,20 @@
 class Notebook {
-  constructor(listOfNotes) {
+  constructor() {
     this.listOfNotes = [];
   }
-  truncatedNotes(){
-    return this.listOfNotes.map(element => {
-     if(element.content.length > 20) { 
-        return element.content.substring(0, 20)+'...'
-      }else {
-        return element.content
-      }})
+  truncatedNotes() {
+    return this.listOfNotes.map((element) => {
+      if (element.content.length > 20) {
+        return `${element.content.substring(0, 20)}...`;
+      } else {
+        return element.content;
+      }
+    });
   }
-  openNotes(indexForNote){
+  openNotes(indexForNote) {
     return this.listOfNotes[indexForNote];
- }
-  addNote(note){
-    this.listOfNotes.push(note)
   }
-
+  addNote(note) {
+    this.listOfNotes.push(note);
+  }
 }

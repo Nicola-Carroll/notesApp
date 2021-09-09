@@ -1,5 +1,7 @@
 body {
   background-color: rgb(184, 203, 238);
+  font-family: monospace;
+  padding: 0.5rem;
 }
 
 h1 {
@@ -8,7 +10,35 @@ h1 {
   font-size: 3rem;
 }
 
+h2 {
+  margin-top: -0.3rem;
+}
+
 .textbox {
-  width: 15rem;
-  height: 10rem;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border-width: 0.2rem;
+}
+
+.column {
+  float: left;
+  width: 22rem;
+}
+
+.button {
+  font-family: monospace;
+  background-color: white;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.35rem;
+}
+
+#exploreNotes {
+  border-width: 50px;
+  border-color: white;
+  height: 34.5vh;
+  overflow: scroll;
 }
