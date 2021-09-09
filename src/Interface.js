@@ -24,18 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return noteButton;
   };
 
-  const createNoteLinks = () => {
-    notebook.listOfNotes.forEach((note) => {
-      const noteLink = createNoteLinkElement(note);
-      document.querySelector("#listOfNotes").appendChild(noteLink);
-      document
-        .querySelector("#listOfNotes")
-        .appendChild(document.createElement("br"));
-    });
-  };
-
-  createNoteLinks();
-
   const addEditOrDeleteNoteEventSingular = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
       document.querySelector("#create").disabled = true; //This disables the create button
