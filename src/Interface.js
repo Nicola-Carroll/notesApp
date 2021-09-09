@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#edit").disabled = false;
       document.querySelector("#delete").disabled = false;
 
-      localStorage.setItem("currentNote", i);
+      sessionStorage.setItem("currentNote", i);
 
       document.querySelector("#notepad").value =
         currentLocalStorage().localList[i].content;
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const exitEditMode = () => {
-    localStorage.removeItem("currentNote");
+    sessionStorage.removeItem("currentNote");
     document.querySelector("#notepad").value = "";
     document.querySelector("#create").disabled = false;
     document.querySelector("#edit").disabled = true;
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.querySelector("#edit").addEventListener("click", () => {
-    i = parseInt(localStorage.getItem("currentNote"));
+    i = parseInt(sessionStorage.getItem("currentNote"));
 
     notebook.listOfNotes[i].content = document.querySelector("#notepad").value;
     notebook.listOfNotes[i].createWithEmojis();
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.querySelector("#delete").addEventListener("click", () => {
-    i = parseInt(localStorage.getItem("currentNote"));
+    i = parseInt(sessionStorage.getItem("currentNote"));
     notebook.deleteNote(i);
 
     updateNoteLinks();
