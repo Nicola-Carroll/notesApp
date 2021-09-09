@@ -81,6 +81,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const exitEditMode = () => {
+    sessionStorage.removeItem("currentNote");
+    document.querySelector("#notepad").value = "";
+    document.querySelector("#buttonTest").disabled = false;
+    document.querySelector("#edit").disabled = true;
+    document.querySelector("#delete").disabled = true;
+  };
+
   addEditOrDeleteNoteEventAll();
 
   const updateNoteLinks = () => {
