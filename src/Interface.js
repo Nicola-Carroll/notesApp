@@ -90,8 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
       notebook.listOfNotes[i].content =
         document.querySelector("#notepad").value;
       notebook.listOfNotes[i].createWithEmojis();
-      console.log(notebook.truncatedNotes());
       updateNoteLinks();
+      // sessionStorage.setItem("notebook", notebook.listOfNotes);
+      // console.log(typeof sessionStorage.getItem("notebook"));
     });
   };
 
@@ -134,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
-    addEditNoteEvent(i);
+    addEditOrDeleteNoteEvent(i);
   }
   // addEventListener followed by click and function is telling the Dom I want whatever is in the function to happen when I click the save button
   //querySelector is identifying that the thing of interest is the edit button (shown by its Id)
