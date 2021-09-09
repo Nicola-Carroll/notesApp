@@ -59,6 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
       .appendChild(document.createElement("br"));
   };
 
+  const saveNote = (i) => {
+    document.querySelector('#edit').addEventListener('click', () => {
+      notebook.listOfNotes[i].content = document.querySelector('#notepad').value;
+      notebook.listOfNotes[i].createWithEmojis();
+    })
+  
+  }
+
   updateNoteLinks();
 
   const addEditNoteEvent = (i) => {
@@ -74,10 +82,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       document.querySelector("#buttonTest").disabled = true; //This disables the create button
+      
+      saveNote(i)
     });
   };
 
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
     addEditNoteEvent(i);
   }
+// addEventListener followed by click and function is telling the Dom I want whatever is in the function to happen when I click the save button
+//querySelector is identifying that the thing of interest is the edit button (shown by its Id)
+
 });
+
+
