@@ -1,41 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const football = new Note("Football is at 5pm today :soccer:");
-  const shoppingList = new Note("bananas, beans, nail varnish, apples");
-  const watchList = new Note(
-    "real housewives, the circle, vampire diaries, the royal wedding :crown:"
-  );
-  football.createWithEmojis();
-  watchList.createWithEmojis();
-
   const notebook = new Notebook();
-  notebook.addNote(football);
-  notebook.addNote(shoppingList);
-  notebook.addNote(watchList);
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
 
-  console.log(notebook.listOfNotes);
-  console.log(notebook.truncatedNotes());
-
-  const createNoteLinkElement = (note) => {
+  const button = document.getElementById("create");
+  button.addEventListener("click", function () {
+    const note = new Note(document.getElementById("notepad").value);
+    notebook.addNote(note);
+    console.log(notebook.listOfNotes);
     const noteButton = document.createElement("input");
+    const listOfNotes = document.getElementById("listOfNotes");
+    noteButton.innerHTML = "" + note.content + "";
+    listOfNotes.appendChild(noteButton);
     const noteIndex = notebook.listOfNotes.indexOf(note);
     noteButton.setAttribute("id", `linkToNote${noteIndex}`);
     noteButton.setAttribute("class", "button");
     noteButton.setAttribute("value", notebook.truncatedNotes()[noteIndex]);
     noteButton.setAttribute("type", "button");
     return noteButton;
-  };
+  });
 
   const updateNoteLinks = () => {
     notebook.listOfNotes.forEach((note) => {

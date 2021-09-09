@@ -15,6 +15,8 @@ class Notebook {
     return this.listOfNotes[indexForNote];
   }
   addNote(note) {
+   note.createWithEmojis();
+   note.content
     this.listOfNotes.push(note);
   }
 }
