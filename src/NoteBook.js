@@ -19,4 +19,8 @@ class Notebook {
    note.content
     this.listOfNotes.push(note);
   }
+
+  deleteNote(index) {
+    this.listOfNotes.splice(index, 1);
+  }
 }
