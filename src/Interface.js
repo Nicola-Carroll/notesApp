@@ -16,15 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
     truncatedList = notebook.truncatedNotes();
 
   const updateSessionStorage = () => {
-    sessionStorage.setItem("listOfNotes", JSON.stringify(notebook.listOfNotes));
-    sessionStorage.setItem(
+    localStorage.setItem("listOfNotes", JSON.stringify(notebook.listOfNotes));
+    localStorage.setItem(
       "truncatedNotes",
       JSON.stringify(notebook.truncatedNotes())
     );
   };
 
   const createNoteLinkElement = (i) => {
-    const truncatedList = JSON.parse(sessionStorage.getItem("truncatedNotes"));
+    const truncatedList = JSON.parse(localStorage.getItem("truncatedNotes"));
 
     const noteButton = document.createElement("input");
 
@@ -36,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const createNoteLinks = () => {
-    const sessionList = JSON.parse(sessionStorage.getItem("listOfNotes"));
-
+    const sessionList = JSON.parse(localStorage.getItem("listOfNotes"));
     for (let i = 0; i < sessionList.length; i++) {
       const noteLink = createNoteLinkElement(i);
       document.querySelector("#listOfNotes").appendChild(noteLink);
@@ -82,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#edit").disabled = false;
       document.querySelector("#delete").disabled = false;
 
-      sessionStorage.setItem("currentNote", i);
+      localStorage.setItem("currentNote", i);
 
       document.querySelector("#notepad").value =
         notebook.listOfNotes[i].content;
@@ -90,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const addEditOrDeleteNoteEventAll = () => {
-    sessionList = JSON.parse(sessionStorage.getItem("listOfNotes"));
+    sessionList = JSON.parse(localStorage.getItem("listOfNotes"));
 
     for (let i = 0; i < sessionList.length; i++) {
       console.log(i);
@@ -99,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const exitEditMode = () => {
-    sessionStorage.removeItem("currentNote");
+    localStorage.removeItem("currentNote");
     document.querySelector("#notepad").value = "";
     document.querySelector("#create").disabled = false;
     document.querySelector("#edit").disabled = true;
@@ -109,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addEditOrDeleteNoteEventAll();
 
   const updateNoteLinks = () => {
-    sessionList = JSON.parse(sessionStorage.getItem("listOfNotes"));
+    sessionList = JSON.parse(localStorage.getItem("listOfNotes"));
 
     for (let i = 0; i < sessionList.length; i++) {
       const oldNoteLink = document.querySelector(`#linkToNote${i}`);
@@ -129,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.querySelector("#edit").addEventListener("click", () => {
-    i = parseInt(sessionStorage.getItem("currentNote"));
+    i = parseInt(localStorage.getItem("currentNote"));
     notebook.listOfNotes[i].content = document.querySelector("#notepad").value;
     notebook.listOfNotes[i].createWithEmojis();
 
@@ -140,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.querySelector("#delete").addEventListener("click", () => {
-    i = parseInt(sessionStorage.getItem("currentNote"));
+    i = parseInt(localStorage.getItem("currentNote"));
     notebook.deleteNote(i);
 
     updateSessionStorage();
