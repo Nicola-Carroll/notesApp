@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#notepad").value =
         notebook.listOfNotes[i].content;
 
+      // this prevents the "edit" button from being added multiple times after multiple clicks
       if (!document.querySelector("#edit")) {
         createEditButton();
       }
