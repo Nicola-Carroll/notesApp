@@ -72,6 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const exitEditMode = () => {
+    sessionStorage.removeItem("currentNote");
+    document.querySelector("#notepad").value = "";
+    document.querySelector("#buttonTest").disabled = false;
+    document.querySelector("#edit").disabled = true;
+    document.querySelector("#delete").disabled = true;
+  };
+
   addEditOrDeleteNoteEventAll();
 
   const updateNoteLinks = () => {
@@ -91,12 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
     notebook.listOfNotes[i].content = document.querySelector("#notepad").value;
     notebook.listOfNotes[i].createWithEmojis();
     updateNoteLinks();
+    exitEditMode();
   });
 
   document.querySelector("#delete").addEventListener("click", () => {
     i = parseInt(sessionStorage.getItem("currentNote"));
     notebook.deleteNote(i);
-    document.querySelector("#notepad").value = "";
     updateNoteLinks();
+    exitEditMode();
   });
 });
