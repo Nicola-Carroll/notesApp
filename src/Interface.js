@@ -62,41 +62,24 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   createNoteLinks();
 
-  const updateNoteLinks = () => {
-    notebook.listOfNotes.forEach((note) => {
-      const noteIndex = notebook.listOfNotes.indexOf(note);
-      // we want to replace the existing element for that note with a new one
-      const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
-      const newNoteLink = createNoteLinkElement(note);
+  const addEditOrDeleteNoteEventSingular = (i) => {
+    document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
+      document.querySelector("#buttonTest").disabled = true; //This disables the create button
+      document.querySelector("#edit").disabled = false;
+      document.querySelector("#delete").disabled = false;
 
-      oldNoteLink.replaceWith(newNoteLink);
+      sessionStorage.setItem("currentNote", i);
+
+      document.querySelector("#notepad").value =
+        notebook.listOfNotes[i].content;
     });
   };
 
-  const createEditButton = () => {
-    const editButton = document.createElement("input");
-    editButton.setAttribute("id", "edit");
-    editButton.setAttribute("type", "button");
-    editButton.setAttribute("class", "button");
-    editButton.setAttribute("value", "Save note");
-    document
-      .querySelector("#mainButtons")
-      .appendChild(editButton)
-      .appendChild(document.createElement("br"));
+  const addEditOrDeleteNoteEventAll = () => {
+    for (let i = 0; i < notebook.listOfNotes.length; i++) {
+      addEditOrDeleteNoteEventSingular(i);
+    }
   };
-
-  const saveNote = (i) => {
-    document.querySelector("#edit").addEventListener("click", () => {
-      notebook.listOfNotes[i].content =
-        document.querySelector("#notepad").value;
-      notebook.listOfNotes[i].createWithEmojis();
-      updateNoteLinks();
-      // sessionStorage.setItem("notebook", notebook.listOfNotes);
-      // console.log(typeof sessionStorage.getItem("notebook"));
-    });
-  };
-
-  // <!-- <input id='delete' value="Delete note" type="button"  class="button"/> -->
 
   addEditOrDeleteNoteEventAll();
 
@@ -107,14 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
       const newNoteLink = createNoteLinkElement(note);
 
-      if (oldNoteLink) {
-        oldNoteLink.replaceWith(newNoteLink);
-      } else {
-        document.querySelector("#listOfNotes").appendChild(newNoteLink);
-        document
-          .querySelector("#listOfNotes")
-          .appendChild(document.createElement("br"));
-      }
+      oldNoteLink.replaceWith(newNoteLink);
     });
     addEditOrDeleteNoteEventAll();
   };
