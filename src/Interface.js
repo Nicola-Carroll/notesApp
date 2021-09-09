@@ -1,45 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const football = new Note("Football is at 5pm today :soccer:");
-  const shoppingList = new Note("bananas, beans, nail varnish, apples");
-  const watchList = new Note(
-    "real housewives, the circle, vampire diaries, the royal wedding :crown:"
-  );
-  football.createWithEmojis();
-  watchList.createWithEmojis();
-
   const notebook = new Notebook();
-  notebook.addNote(football);
-  notebook.addNote(shoppingList);
-  notebook.addNote(watchList);
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
-  notebook.addNote(new Note("test"));
 
-  storage = window.sessionStorage;
-
-  sessionStorage.setItem("notebook", notebook.listOfNotes);
-
-  console.log(notebook.listOfNotes);
-  console.log(notebook.truncatedNotes());
-
-  const createNoteLinkElement = (note) => {
-    const noteButton = document.createElement("input");
-    const noteIndex = notebook.listOfNotes.indexOf(note);
-    noteButton.setAttribute("id", `linkToNote${noteIndex}`);
-    noteButton.setAttribute("class", "button");
-    noteButton.setAttribute("value", notebook.truncatedNotes()[noteIndex]);
-    noteButton.setAttribute("type", "button");
-    return noteButton;
-  };
+  const button = document.getElementById("create");
+  
+  button.addEventListener("click", function () {
+    const note = new Note(document.getElementById("notepad").value);
+    notebook.addNote(note);
+    
+    updateNoteLinks();
+  });
 
   const createNoteLinks = () => {
     notebook.listOfNotes.forEach((note) => {
@@ -55,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const addEditOrDeleteNoteEventSingular = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
-      document.querySelector("#buttonTest").disabled = true; //This disables the create button
+      document.querySelector("#create").disabled = true; //This disables the create button
       document.querySelector("#edit").disabled = false;
       document.querySelector("#delete").disabled = false;
 
@@ -75,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const exitEditMode = () => {
     sessionStorage.removeItem("currentNote");
     document.querySelector("#notepad").value = "";
-    document.querySelector("#buttonTest").disabled = false;
+    document.querySelector("#create").disabled = false;
     document.querySelector("#edit").disabled = true;
     document.querySelector("#delete").disabled = true;
   };
@@ -108,4 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
     updateNoteLinks();
     exitEditMode();
   });
+});
+  for (let i = 0; i < notebook.listOfNotes.length; i++) {
+    addEditNoteEvent(i);
+  }
 });
