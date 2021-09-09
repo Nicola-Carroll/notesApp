@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const createNoteLinkElement = (note) => {
     i = notebook.listOfNotes.indexOf(note);
     truncatedList = notebook.truncatedNotes();
-
+    
     const noteButton = document.createElement("input");
 
     noteButton.setAttribute("id", `linkToNote${i}`);
@@ -33,8 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .appendChild(document.createElement("br"));
     });
   };
-
-  createNoteLinks();
 
   const addEditOrDeleteNoteEventSingular = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
