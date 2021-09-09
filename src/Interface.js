@@ -18,19 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return noteButton;
   });
 
-  // console.log(notebook.listOfNotes);
-  // console.log(notebook.truncatedNotes());
-
-  const createNoteLinkElement = (note) => {
-    // const noteButton = document.createElement("input");
-    // noteIndex = notebook.listOfNotes.indexOf(note);
-    // noteButton.setAttribute("id", `linkToNote${noteIndex}`);
-    // noteButton.setAttribute("class", "button");
-    // noteButton.setAttribute("value", notebook.truncatedNotes()[noteIndex]);
-    // noteButton.setAttribute("type", "button");
-    // return noteButton;
-  };
-
   const updateNoteLinks = () => {
     notebook.listOfNotes.forEach((note) => {
       const noteLink = createNoteLinkElement(note);
