@@ -8,6 +8,7 @@ h1 {
   font-family: monospace;
   font-weight: inherit;
   font-size: 3rem;
+  padding-left: 1.8rem;
 }
 
 h2 {
@@ -15,8 +16,8 @@ h2 {
 }
 
 .textbox {
-  width: 300px;
-  height: 300px;
+  width: 20rem;
+  height: 20rem;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -26,15 +27,27 @@ h2 {
 .column {
   float: left;
   width: 22rem;
+  padding-left: 1.8rem;
 }
 
-.button,
-li {
+.button::after {
+  content: "\a";
+}
+
+.button {
   font-family: monospace;
   background-color: white;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   padding: 0.25rem;
+}
+
+.mainButton {
+  font-family: monospace;
+  background-color: white;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.45rem;
 }
 
 #exploreNotes {
@@ -44,12 +57,6 @@ li {
   overflow: scroll;
 }
 
-input,
-#create,
-#delete {
-  display: inline-block;
-}
-
-input {
+.button {
   display: block;
 }
