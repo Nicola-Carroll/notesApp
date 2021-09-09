@@ -15,6 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
     i = notebook.listOfNotes.indexOf(note);
     truncatedList = notebook.truncatedNotes();
 
+  const updateSessionStorage = () => {
+    sessionStorage.setItem("listOfNotes", JSON.stringify(notebook.listOfNotes));
+    sessionStorage.setItem(
+      "truncatedNotes",
+      JSON.stringify(notebook.truncatedNotes())
+    );
+  };
+
+  const createNoteLinkElement = (i) => {
+    const truncatedList = JSON.parse(sessionStorage.getItem("truncatedNotes"));
+
     const noteButton = document.createElement("input");
 
     noteButton.setAttribute("id", `linkToNote${i}`);
@@ -25,13 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const createNoteLinks = () => {
-    notebook.listOfNotes.forEach((note) => {
-      const noteLink = createNoteLinkElement(note);
+    const sessionList = JSON.parse(sessionStorage.getItem("listOfNotes"));
+
+    for (let i = 0; i < sessionList.length; i++) {
+      const noteLink = createNoteLinkElement(i);
       document.querySelector("#listOfNotes").appendChild(noteLink);
       document
         .querySelector("#listOfNotes")
         .appendChild(document.createElement("br"));
-    });
+    }
   };
 
   const addEditOrDeleteNoteEventSingular = (i) => {
@@ -60,11 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#edit").disabled = true;
     document.querySelector("#delete").disabled = true;
   };
+  updateSessionStorage();
   createNoteLinks();
 
   const addEditOrDeleteNoteEventSingular = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
-      document.querySelector("#buttonTest").disabled = true; //This disables the create button
+      document.querySelector("#create").disabled = true; //This disables the create button
       document.querySelector("#edit").disabled = false;
       document.querySelector("#delete").disabled = false;
 
@@ -76,7 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const addEditOrDeleteNoteEventAll = () => {
-    for (let i = 0; i < notebook.listOfNotes.length; i++) {
+    sessionList = JSON.parse(sessionStorage.getItem("listOfNotes"));
+
+    for (let i = 0; i < sessionList.length; i++) {
+      console.log(i);
       addEditOrDeleteNoteEventSingular(i);
     }
   };
@@ -84,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const exitEditMode = () => {
     sessionStorage.removeItem("currentNote");
     document.querySelector("#notepad").value = "";
-    document.querySelector("#buttonTest").disabled = false;
+    document.querySelector("#create").disabled = false;
     document.querySelector("#edit").disabled = true;
     document.querySelector("#delete").disabled = true;
   };
@@ -92,14 +109,22 @@ document.addEventListener("DOMContentLoaded", () => {
   addEditOrDeleteNoteEventAll();
 
   const updateNoteLinks = () => {
-    notebook.listOfNotes.forEach((note) => {
-      const noteIndex = notebook.listOfNotes.indexOf(note);
-      // we want to replace the existing element for that note with a new one
-      const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
-      const newNoteLink = createNoteLinkElement(note);
+    sessionList = JSON.parse(sessionStorage.getItem("listOfNotes"));
 
-      oldNoteLink.replaceWith(newNoteLink);
-    });
+    for (let i = 0; i < sessionList.length; i++) {
+      const oldNoteLink = document.querySelector(`#linkToNote${i}`);
+      const newNoteLink = createNoteLinkElement(i);
+
+      if (oldNoteLink) {
+        oldNoteLink.replaceWith(newNoteLink);
+      } else {
+        document.querySelector("#listOfNotes").appendChild(newNoteLink);
+        document
+          .querySelector("#listOfNotes")
+          .appendChild(document.createElement("br"));
+      }
+    }
+
     addEditOrDeleteNoteEventAll();
   };
 
@@ -107,6 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
     i = parseInt(sessionStorage.getItem("currentNote"));
     notebook.listOfNotes[i].content = document.querySelector("#notepad").value;
     notebook.listOfNotes[i].createWithEmojis();
+
+    updateSessionStorage();
+
     updateNoteLinks();
     exitEditMode();
   });
@@ -114,8 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#delete").addEventListener("click", () => {
     i = parseInt(sessionStorage.getItem("currentNote"));
     notebook.deleteNote(i);
-    updateNoteLinks();
+
+    updateSessionStorage();
+
     exitEditMode();
+    document.querySelector(`#linkToNote${i}`).remove();
+    updateNoteLinks();
   });
 
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
