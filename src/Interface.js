@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
   notebook.addNote(new Note("test"));
   notebook.addNote(new Note("test"));
 
+  storage = window.sessionStorage;
+
+  sessionStorage.setItem("notebook", notebook.listOfNotes);
+
   console.log(notebook.listOfNotes);
   console.log(notebook.truncatedNotes());
 
@@ -77,33 +81,62 @@ document.addEventListener("DOMContentLoaded", () => {
       notebook.listOfNotes[i].content =
         document.querySelector("#notepad").value;
       notebook.listOfNotes[i].createWithEmojis();
-      console.log(notebook.truncatedNotes());
       updateNoteLinks();
+      // sessionStorage.setItem("notebook", notebook.listOfNotes);
+      // console.log(typeof sessionStorage.getItem("notebook"));
     });
   };
 
   // <!-- <input id='delete' value="Delete note" type="button"  class="button"/> -->
 
-  const addEditNoteEvent = (i) => {
+  const createDeleteButton = () => {
+    const deleteButton = document.createElement("input");
+    deleteButton.setAttribute("id", "delete");
+    deleteButton.setAttribute("type", "button");
+    deleteButton.setAttribute("class", "button");
+    deleteButton.setAttribute("value", "Delete note");
+    document
+      .querySelector("#mainButtons")
+      .appendChild(deleteButton)
+      .appendChild(document.createElement("br"));
+  };
+
+  const deleteNote = (i) => {
+    document.querySelector("#delete").addEventListener("click", () => {
+      document.querySelector("#notepad").value = "";
+      document.querySelector("#delete");
+      notebook.deleteNote(i);
+      updateNoteLinks();
+      console.log(notebook.listOfNotes);
+    });
+  };
+
+  const addEditOrDeleteNoteEvent = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
       //edit button to edit 2nd  index
+      console.log("i have been clicked");
+      console.log(notebook.listOfNotes);
 
       document.querySelector("#notepad").value =
         notebook.listOfNotes[i].content;
 
-      // this prevents the "edit" button from being added multiple times after multiple clicks
+      // prevents the buttons from being added multiple times after multiple clicks
       if (!document.querySelector("#edit")) {
         createEditButton();
       }
+      // if (!document.querySelector("#delete")) {
+      //   createDeleteButton();
+      // }
 
       document.querySelector("#buttonTest").disabled = true; //This disables the create button
 
       saveNote(i);
+      // deleteNote(i);
     });
   };
 
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
-    addEditNoteEvent(i);
+    addEditOrDeleteNoteEvent(i);
   }
   // addEventListener followed by click and function is telling the Dom I want whatever is in the function to happen when I click the save button
   //querySelector is identifying that the thing of interest is the edit button (shown by its Id)
