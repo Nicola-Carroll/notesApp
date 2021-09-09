@@ -2,13 +2,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const notebook = new Notebook();
 
   const button = document.getElementById("create");
-  
+
   button.addEventListener("click", function () {
     const note = new Note(document.getElementById("notepad").value);
     notebook.addNote(note);
-    
+
     updateNoteLinks();
+    document.getElementById("notepad").value = "";
   });
+
+  const createNoteLinkElement = (note) => {
+    i = notebook.listOfNotes.indexOf(note);
+    truncatedList = notebook.truncatedNotes();
+
+    const noteButton = document.createElement("input");
+
+    noteButton.setAttribute("id", `linkToNote${i}`);
+    noteButton.setAttribute("class", "button");
+    noteButton.setAttribute("value", truncatedList[i]);
+    noteButton.setAttribute("type", "button");
+    return noteButton;
+  };
 
   const createNoteLinks = () => {
     notebook.listOfNotes.forEach((note) => {
@@ -58,7 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
       const newNoteLink = createNoteLinkElement(note);
 
-      oldNoteLink.replaceWith(newNoteLink);
+      if (oldNoteLink) {
+        oldNoteLink.replaceWith(newNoteLink);
+      } else {
+        document.querySelector("#listOfNotes").appendChild(newNoteLink);
+        document
+          .querySelector("#listOfNotes")
+          .appendChild(document.createElement("br"));
+      }
     });
     addEditOrDeleteNoteEventAll();
   };
@@ -77,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateNoteLinks();
     exitEditMode();
   });
-});
+
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
     addEditNoteEvent(i);
   }
