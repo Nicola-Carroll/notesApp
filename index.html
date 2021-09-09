@@ -6,19 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Notes App</title>
     <link rel="stylesheet" href="./public/style.css" />
+    <script src="src/Interface.js"></script>
+    <script src="src/Note.js"></script>
+    <script src="src/NoteBook.js"></script>
   </head>
   <body>
     <h1>NOTES APP</h1>
-    <input placeholder="Type note here.." type="text" class="textbox"/>
-</br>
-    <input value="create" type="button" />
-</br>
-<a href = "/">Notes</a>
-</br>
-<a href = "/">Notes</a>
-</br>
-<a href = "/">Notes</a>
 
-    <!-- <script src="index.js"></script> -->
+    <div class="column">
+      <div class="container">
+        <textarea id="notepad" placeholder="Type note here..." class="textbox"></textarea>
+      </div>
+
+      <div id ='mainButtons'>
+        <input id='buttonTest' value="Create note" type="button"  class="button"/>
+        <input id='delete' value="Delete note" type="button"  class="button"/>
+      </div>
+    </div>
+
+    <div class="column" id="leftColumn">
+
+      <h2>View your notes</h2>
+      <section id="exploreNotes">
+        <div id="listOfNotes">
+        </div>
+      </section>
+
+    </div>
+
+
+
+
   </body>
 </html>
