@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const notebook = new Notebook();
 
   const button = document.getElementById("create");
-  
+
   button.addEventListener("click", function () {
     const note = new Note(document.getElementById("notepad").value);
     notebook.addNote(note);
-    
+
     updateNoteLinks();
   });
 
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateNoteLinks();
     exitEditMode();
   });
-});
+
   for (let i = 0; i < notebook.listOfNotes.length; i++) {
     addEditNoteEvent(i);
   }

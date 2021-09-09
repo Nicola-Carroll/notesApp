@@ -15,26 +15,28 @@
 
     <div class="column">
       <div class="container">
-        <textarea
-          id="notepad"
-          placeholder="Type note here..."
-          class="textbox"
-        ></textarea>
+        <textarea id="notepad" placeholder="Type note here..." class="textbox"></textarea>
       </div>
-
 
       <div id ='mainButtons'>
         <input id='create' value="Create note" type="button"  class="button"/>
-        <input id='edit' value="Edit note" type="button"  class="button" disabled="true"/>
+        <input id='edit' value="Save changes" type="button"  class="button" disabled="true"/>
         <input id='delete' value="Delete note" type="button"  class="button" disabled="true"/>
       </div>
     </div>
 
     <div class="column" id="leftColumn">
+
       <h2>View your notes</h2>
       <section id="exploreNotes">
-        <div id="listOfNotes"></div>
+        <div id="listOfNotes">
+        </div>
       </section>
+
     </div>
+
+
+
+
   </body>
 </html>
