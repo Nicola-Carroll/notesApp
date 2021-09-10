@@ -28,9 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     note.createWithEmojis();
 
-    console.log(note.content);
-    console.log(notebook.listOfNotes);
-
     updateNoteLinks();
     document.getElementById("notepad").value = "";
   });
