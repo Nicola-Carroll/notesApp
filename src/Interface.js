@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const currentLocalStorage = () => {
+    console.log(notebook.listOfNotes);
+
     localStorage.setItem("listOfNotes", JSON.stringify(notebook.listOfNotes));
     localStorage.setItem(
       "truncatedList",
@@ -28,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     note.createWithEmojis();
 
+    console.log(note.content);
+
     updateNoteLinks();
     document.getElementById("notepad").value = "";
   });
@@ -46,7 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const addEditOrDeleteNoteEventAll = () => {
-    for (let i = 0; i < currentLocalStorage().localList.length; i++) {
+    currentStorage = currentLocalStorage().localList;
+    for (let i = 0; i < currentStorage.length; i++) {
       addEditOrDeleteNoteEventSingular(i);
     }
   };
@@ -77,8 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateNoteLinks = () => {
     list = document.querySelector("#listOfNotes");
+    currentStorage = currentLocalStorage().localList;
     removeAllChildNodes(list);
-    for (i = 0; i < currentLocalStorage().localList.length; i++) {
+    for (i = 0; i < currentStorage.length; i++) {
       // we want to replace the existing element for that note with a new one
       const newNoteLink = createNoteLinkElement(i);
       document.querySelector("#listOfNotes").appendChild(newNoteLink);
@@ -103,8 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateNoteLinks();
     exitEditMode();
   });
-
-  currentLocalStorage();
 
   updateNoteLinks();
 
