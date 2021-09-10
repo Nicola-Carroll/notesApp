@@ -1,13 +1,13 @@
 class Notebook {
-  constructor() {
-    this.listOfNotes = [];
+  constructor(listOfNotes = []) {
+    this.listOfNotes = listOfNotes;
   }
   truncatedNotes() {
-    return this.listOfNotes.map((element) => {
-      if (element.content.length > 20) {
-        return `${element.content.substring(0, 20)}...`;
+    return this.listOfNotes.map((note) => {
+      if (note.content.length > 20) {
+        return `${note.content.substring(0, 20)}...`;
       } else {
-        return element.content;
+        return note.content;
       }
     });
   }
@@ -15,8 +15,7 @@ class Notebook {
     return this.listOfNotes[indexForNote];
   }
   addNote(note) {
-   note.createWithEmojis();
-   note.content
+    note.createWithEmojis();
     this.listOfNotes.push(note);
   }
 

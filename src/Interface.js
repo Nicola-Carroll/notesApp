@@ -1,38 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
   const notebook = new Notebook();
 
-  const button = document.getElementById("create");
+  if (JSON.parse(localStorage.getItem("listOfNotes"))) {
+    JSON.parse(localStorage.getItem("listOfNotes")).forEach((note) => {
+      const newNote = new Note(note.content);
+      notebook.addNote(newNote);
+    });
+  }
 
-  button.addEventListener("click", function () {
+  const currentLocalStorage = () => {
+    console.log(notebook.listOfNotes);
+
+    localStorage.setItem("listOfNotes", JSON.stringify(notebook.listOfNotes));
+    localStorage.setItem(
+      "truncatedList",
+      JSON.stringify(notebook.truncatedNotes())
+    );
+
+    return {
+      localList: JSON.parse(localStorage.getItem("listOfNotes")),
+      truncatedList: JSON.parse(localStorage.getItem("truncatedList")),
+    };
+  };
+
+  document.getElementById("create").addEventListener("click", function () {
     const note = new Note(document.getElementById("notepad").value);
     notebook.addNote(note);
+    currentLocalStorage();
+
+    note.createWithEmojis();
+
+    console.log(note.content);
 
     updateNoteLinks();
     document.getElementById("notepad").value = "";
   });
-
-  const createNoteLinkElement = (note) => {
-    i = notebook.listOfNotes.indexOf(note);
-    truncatedList = notebook.truncatedNotes();
-    
-    const noteButton = document.createElement("input");
-
-    noteButton.setAttribute("id", `linkToNote${i}`);
-    noteButton.setAttribute("class", "button");
-    noteButton.setAttribute("value", truncatedList[i]);
-    noteButton.setAttribute("type", "button");
-    return noteButton;
-  };
-
-  const createNoteLinks = () => {
-    notebook.listOfNotes.forEach((note) => {
-      const noteLink = createNoteLinkElement(note);
-      document.querySelector("#listOfNotes").appendChild(noteLink);
-      document
-        .querySelector("#listOfNotes")
-        .appendChild(document.createElement("br"));
-    });
-  };
 
   const addEditOrDeleteNoteEventSingular = (i) => {
     document.querySelector(`#linkToNote${i}`).addEventListener("click", () => {
@@ -43,12 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
       sessionStorage.setItem("currentNote", i);
 
       document.querySelector("#notepad").value =
-        notebook.listOfNotes[i].content;
+        currentLocalStorage().localList[i].content;
     });
   };
 
   const addEditOrDeleteNoteEventAll = () => {
-    for (let i = 0; i < notebook.listOfNotes.length; i++) {
+    currentStorage = currentLocalStorage().localList;
+    for (let i = 0; i < currentStorage.length; i++) {
       addEditOrDeleteNoteEventSingular(i);
     }
   };
@@ -61,31 +64,40 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#delete").disabled = true;
   };
 
-  addEditOrDeleteNoteEventAll();
+  const createNoteLinkElement = (i) => {
+    const noteButton = document.createElement("input");
+
+    noteButton.setAttribute("id", `linkToNote${i}`);
+    noteButton.setAttribute("class", "button");
+    noteButton.setAttribute("value", currentLocalStorage().truncatedList[i]);
+    noteButton.setAttribute("type", "button");
+    return noteButton;
+  };
+
+  const removeAllChildNodes = (parent) => {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  };
 
   const updateNoteLinks = () => {
-    notebook.listOfNotes.forEach((note) => {
-      const noteIndex = notebook.listOfNotes.indexOf(note);
+    list = document.querySelector("#listOfNotes");
+    currentStorage = currentLocalStorage().localList;
+    removeAllChildNodes(list);
+    for (i = 0; i < currentStorage.length; i++) {
       // we want to replace the existing element for that note with a new one
-      const oldNoteLink = document.querySelector(`#linkToNote${noteIndex}`);
-      const newNoteLink = createNoteLinkElement(note);
-
-      if (oldNoteLink) {
-        oldNoteLink.replaceWith(newNoteLink);
-      } else {
-        document.querySelector("#listOfNotes").appendChild(newNoteLink);
-        document
-          .querySelector("#listOfNotes")
-          .appendChild(document.createElement("br"));
-      }
-    });
+      const newNoteLink = createNoteLinkElement(i);
+      document.querySelector("#listOfNotes").appendChild(newNoteLink);
+    }
     addEditOrDeleteNoteEventAll();
   };
 
   document.querySelector("#edit").addEventListener("click", () => {
     i = parseInt(sessionStorage.getItem("currentNote"));
+
     notebook.listOfNotes[i].content = document.querySelector("#notepad").value;
     notebook.listOfNotes[i].createWithEmojis();
+
     updateNoteLinks();
     exitEditMode();
   });
@@ -93,11 +105,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#delete").addEventListener("click", () => {
     i = parseInt(sessionStorage.getItem("currentNote"));
     notebook.deleteNote(i);
+
     updateNoteLinks();
     exitEditMode();
   });
 
-  for (let i = 0; i < notebook.listOfNotes.length; i++) {
-    addEditNoteEvent(i);
-  }
+  updateNoteLinks();
+
+  addEditOrDeleteNoteEventAll();
 });
